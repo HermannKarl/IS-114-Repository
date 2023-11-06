@@ -1,0 +1,48 @@
+#Jeg har valgt å bruke flere funksjoner for å lage en funksjon for å tegne de skandinaviske flaggene, og en mer detaljert forklaring finner du nedenfor. Jeg velger å definere alle de forskjellige rektanglene som flaggene skal bestå av ved å bruke lister; listene blir importert videre med F. Jeg kan definere alle flaggenes rektangeldimensjoner og størrelser ved å bruke lister og enkelt hente dem inn i koden med F.get. 
+
+import lists as F
+
+#For å gjøre ting lettere, har jeg laget flaggene med tall og endret dem basert på tallene deres, med Norge (0) som grunnflagg. 
+
+table: Flagg :: String, Tall :: Number 
+
+  row: "Norge", 0 
+
+  row: "Danmark", 1 
+
+  row: "Sverige", 2 
+
+  row: "Finland", 3 
+
+  row: "Island", 4
+
+  row: "Færøyene", 5 
+
+end 
+
+"Skriv `flagg(tall)` der du setter inn et nytt tall i tabellen ovenfor" 
+
+#Jeg begynner med å definere flaggenes dimensjoner, dim, hvor de tre første tallene representerer det norske flagget, de tre neste representerer det danske osv.  Med samme logikk og flaggenes farger definerer rek-funksjonen disse dimensjonene.  
+
+fun flagg(tall):   
+
+  doc: "tegner flaggene til landene i Skandinavia" 
+
+  dim = [list: 6, 4, 2, 12, 4, 0, 5, 2, 0, 5, 3, 0, 7, 4, 2, 6, 4, 2] 
+
+  rek = [list: 22 , 16, 0, 37, 28, 0, 16, 10, 0, 18, 11, 0, 25, 18, 0, 22, 16] 
+
+  farger = [list: "red", "white", "dark-blue", "red", "white", "orange", "blue", "gold", "orange", "white", "dark-blue", "orange", "dark-blue", "white", "red", "white", "dark-blue", "red"] 
+
+#Avhengig av hvilket flagg som vises, er flaggene konstruert i en rett linje og består av fire kors eller lag.I dette tilfellet brukes F.get for å hente listeverdier, som deretter ganges basert på hvilket flagg som skal lages.  
+
+  background = rectangle(F.get(rek, 0 + (3 * tall)) * 10, F.get(rek, 1 + (3 * tall)) * 10, "solid", F.get(farger, 0 + (3 * tall))) 
+
+  kors1 = put-image(rectangle(F.get(rek, 0 + (3 * tall)) * 10, F.get(dim, 1 + (3 * tall)) * 10, "solid", F.get(farger, 1 + (3 * tall))), (F.get(rek, 0 + (3 * tall)) / 2) * 10, (F.get(rek, 1 + (3 * tall)) / 2) * 10, background) 
+
+  kors2 = put-image(rectangle(F.get(dim, 1 + (3 * tall)) * 10, F.get(rek, 1 + (3 * tall)) * 10, "solid", F.get(farger, 1 + (3 * tall))), (F.get(rek, 1 + (3 * tall)) / 2) * 10, (F.get(rek, 1 + (3 * tall)) / 2) * 10, kors1) 
+
+  kors3 = put-image(rectangle(F.get(rek, 0 + (3 * tall)) * 10, F.get(dim, 2 + (3 * tall)) * 10, "solid", F.get(farger, 2 + (3 * tall))), (F.get(rek, 0 + (3 * tall)) / 2) * 10, (F.get(rek, 1 + (3 * tall)) / 2) * 10, kors2) 
+
+  put-image(rectangle(F.get(dim, 2 + (3 * tall)) * 10, F.get(rek, 1 + (3 * tall)) * 10, "solid", F.get(farger, 2 + (3 * tall))), (F.get(rek, 1 + (3 * tall)) / 2) * 10, (F.get(rek, 1 + (3 * tall)) / 2) * 10, kors3) 
+end
